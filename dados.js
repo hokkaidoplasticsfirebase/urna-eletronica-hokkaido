@@ -153,6 +153,6 @@ const USUARIOS = [
 
 // --- CONFIGURAÇÃO DOS CANDIDATOS ---
 const CANDIDATOS = [
-  { numero: '13', nome: 'Betinho do PCP', setor: 'PCP', foto: 'https://i.postimg.cc/C5nkQqV8/Gemini-Generated-Image-56hhzd56hhzd56hh.png' },
-  { numero: '22', nome: 'Marcelo TST', setor: 'TST', foto: 'https://i.postimg.cc/5NZjnBpC/Captura-de-tela-2026-03-19-080531.png' }
+  { numero: '13', nome: 'Roberto Fernandes', setor: 'PCP', foto: 'https://i.postimg.cc/C5nkQqV8/Gemini-Generated-Image-56hhzd56hhzd56hh.png' },
+  { numero: '22', nome: 'Marcelo Moreira', setor: 'TST', foto: 'https://i.postimg.cc/5NZjnBpC/Captura-de-tela-2026-03-19-080531.png' }
 ];
