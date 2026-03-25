@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesário - CIPA 2026/2027</title>
+  <link rel="stylesheet" href="mesario.css">
+</head>
+<body>
+
+  <header class="header-mesario">
+    <h1>HOKKAIDO PLASTICS</h1>
+    <h2>PAINEL DO MESÁRIO — ELEIÇÕES CIPA 2026/2027</h2>
+  </header>
+
+  <main class="painel">
+
+    <!-- Estatísticas -->
+    <section class="stats-grid">
+      <div class="stat-card azul">
+        <span class="stat-label">Total de Eleitores</span>
+        <span class="stat-valor" id="stat-total">0</span>
+      </div>
+      <div class="stat-card verde">
+        <span class="stat-label">Já Votaram</span>
+        <span class="stat-valor" id="stat-votaram">0</span>
+      </div>
+      <div class="stat-card laranja">
+        <span class="stat-label">Restantes</span>
+        <span class="stat-valor" id="stat-restantes">0</span>
+      </div>
+    </section>
+
+    <!-- Barra de progresso -->
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+      <span class="progress-text" id="progress-text">0%</span>
+    </div>
+
+    <!-- Status da urna -->
+    <div class="urna-status" id="urna-status">
+      <span class="status-dot verde"></span>
+      <span class="status-text">Urna livre — pronta para próximo eleitor</span>
+    </div>
+
+    <!-- Painel de identificação -->
+    <section class="id-panel">
+      <h3>Identificação do Eleitor</h3>
+
+      <div class="id-input-group">
+        <label for="input-codigo">Código do Eleitor:</label>
+        <div class="input-row">
+          <input type="text" id="input-codigo" maxlength="3" placeholder="000" autocomplete="off">
+          <button class="btn-buscar" id="btn-buscar" onclick="buscarEleitor()">Buscar</button>
+        </div>
+      </div>
+
+      <!-- Resultado da busca -->
+      <div id="resultado-busca" class="resultado-busca" style="display:none;">
+        <div class="eleitor-info">
+          <span class="eleitor-icone">&#128100;</span>
+          <div>
+            <p class="eleitor-nome" id="eleitor-nome"></p>
+            <p class="eleitor-codigo" id="eleitor-codigo"></p>
+          </div>
+        </div>
+        <div class="eleitor-acoes">
+          <button class="btn-cancelar" onclick="cancelarBusca()">Cancelar</button>
+          <button class="btn-liberar" id="btn-liberar" onclick="liberarUrna()">&#9654; Liberar Urna</button>
+        </div>
+      </div>
+
+      <p id="busca-erro" class="busca-erro" style="display:none;"></p>
+    </section>
+
+    <!-- Lista de eleitores -->
+    <section class="lista-section">
+      <h3>Lista de Eleitores</h3>
+      <input type="text" id="filtro-eleitores" placeholder="Filtrar por nome ou código..." oninput="filtrarEleitores()">
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nome</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+          <tbody id="lista-eleitores"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="dados.js"></script>
+  <script src="mesario.js"></script>
+</body>
+</html>

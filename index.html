@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urna Eletrônica - CIPA 2026/2027</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header class="header">
+    <button class="btn-admin" onclick="abrirPainelAdmin()" title="Acesso da Comissão">
+      &#128737;
+    </button>
+    <h1>HOKKAIDO PLASTICS</h1>
+    <h2>ELEIÇÕES CIPA 2026/2027</h2>
+  </header>
+
+  <!-- CORPO DA URNA -->
+  <main class="urna-chassi">
+
+    <!-- TELA DA URNA -->
+    <section class="urna-tela" id="urna-tela">
+
+      <!-- Estado: Aguardando liberação do mesário -->
+      <div id="tela-aguardando" style="display:none;">
+        <div class="aguardando-conteudo">
+          <div class="aguardando-icone">&#128274;</div>
+          <h2 class="aguardando-titulo">AGUARDANDO LIBERAÇÃO</h2>
+          <p class="aguardando-texto">O mesário deve liberar a urna<br>para o próximo eleitor.</p>
+          <div class="aguardando-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estado: Votação -->
+      <div id="tela-votacao" style="display:none;">
+        <div class="tela-cabecalho">
+          <div>
+            <span class="tela-label">SEU VOTO PARA</span>
+            <span class="tela-cargo">MEMBRO DA CIPA</span>
+          </div>
+          <div class="tela-badge">Hokkaido</div>
+        </div>
+
+        <div class="tela-centro">
+          <div class="tela-info">
+            <div class="tela-numero-row">
+              <span class="tela-label-sm">Número:</span>
+              <div class="digito-box" id="digito1"></div>
+              <div class="digito-box" id="digito2"></div>
+            </div>
+
+            <div id="info-candidato" class="info-candidato" style="display:none;">
+              <p><strong>Nome:</strong> <span id="info-nome"></span></p>
+              <p><strong>Setor:</strong> <span id="info-setor"></span></p>
+            </div>
+
+            <div id="info-nulo" class="info-nulo" style="display:none;">
+              <p class="label-erro">NÚMERO ERRADO</p>
+              <p class="texto-grande pulsando">VOTO NULO</p>
+            </div>
+
+            <div id="info-branco" class="info-branco" style="display:none;">
+              <p class="texto-grande pulsando">VOTO EM BRANCO</p>
+            </div>
+          </div>
+
+          <div class="tela-foto" id="tela-foto" style="display:none;">
+            <span class="foto-placeholder">FOTO<br>CANDIDATO</span>
+            <img id="foto-img" src="" alt="Foto do candidato" style="display:none;">
+          </div>
+        </div>
+
+        <div class="tela-rodape">
+          <p>Aperte a tecla:</p>
+          <p class="instrucao-verde">VERDE para CONFIRMAR este voto</p>
+          <p class="instrucao-laranja">LARANJA para REINICIAR este voto</p>
+        </div>
+      </div>
+
+      <!-- Estado: FIM (pós-voto) -->
+      <div id="tela-fim" style="display:none;">
+        <h1 class="texto-fim">FIM</h1>
+        <p class="texto-votou">VOTOU</p>
+      </div>
+    </section>
+
+    <!-- TECLADO DA URNA -->
+    <section class="urna-teclado">
+      <div class="teclado-header">
+        <div class="teclado-logo">
+          <div class="logo-circulo"><div class="logo-centro"></div></div>
+          JUSTIÇA ELEITORAL
+        </div>
+      </div>
+
+      <div class="teclas-numericas">
+        <button class="tecla" onclick="digitarNumero('1')">1</button>
+        <button class="tecla" onclick="digitarNumero('2')">2</button>
+        <button class="tecla" onclick="digitarNumero('3')">3</button>
+        <button class="tecla" onclick="digitarNumero('4')">4</button>
+        <button class="tecla" onclick="digitarNumero('5')">5</button>
+        <button class="tecla" onclick="digitarNumero('6')">6</button>
+        <button class="tecla" onclick="digitarNumero('7')">7</button>
+        <button class="tecla" onclick="digitarNumero('8')">8</button>
+        <button class="tecla" onclick="digitarNumero('9')">9</button>
+        <button class="tecla tecla-vazia"></button>
+        <button class="tecla" onclick="digitarNumero('0')">0</button>
+        <button class="tecla tecla-vazia"></button>
+      </div>
+
+      <div class="teclas-acao">
+        <button class="tecla-branco" onclick="votoBranco()">BRANCO</button>
+        <button class="tecla-corrige" onclick="corrigir()">CORRIGE</button>
+        <button class="tecla-confirma" onclick="confirmar()">CONFIRMA</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL ADMIN -->
+  <div class="modal-overlay" id="modal-admin" style="display:none;">
+    <div class="modal-conteudo">
+      <button class="modal-fechar" onclick="fecharPainelAdmin()">&times;</button>
+
+      <div class="modal-cabecalho">
+        <span class="icone-grafico">&#128202;</span>
+        <h2>Painel de Apuração - CIPA</h2>
+      </div>
+
+      <!-- Login -->
+      <div id="admin-login">
+        <div class="login-area">
+          <span class="icone-cadeado">&#128274;</span>
+          <p>Área restrita à comissão eleitoral.</p>
+          <input type="password" id="input-senha" placeholder="Senha de Acesso" onkeydown="if(event.key==='Enter')loginAdmin()">
+          <button class="btn-login" onclick="loginAdmin()">Acessar Resultados</button>
+        </div>
+      </div>
+
+      <!-- Resultados -->
+      <div id="admin-resultados" style="display:none;">
+        <div class="resumo-grid">
+          <div class="resumo-card azul">
+            <p class="resumo-label">Total de Votos</p>
+            <p class="resumo-valor" id="res-total">0</p>
+          </div>
+          <div class="resumo-card cinza">
+            <p class="resumo-label">Votos Brancos</p>
+            <p class="resumo-valor" id="res-brancos">0</p>
+          </div>
+          <div class="resumo-card vermelho">
+            <p class="resumo-label">Votos Nulos</p>
+            <p class="resumo-valor" id="res-nulos">0</p>
+          </div>
+        </div>
+
+        <h3 class="classificacao-titulo">Classificação</h3>
+        <div id="lista-classificacao"></div>
+
+        <h3 class="classificacao-titulo" style="margin-top:28px;">Eleitores</h3>
+        <p id="eleitores-info" style="font-size:0.85rem;color:#666;margin-bottom:8px;"></p>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr style="background:#1e40af;color:#fff;">
+                <th style="padding:8px 12px;text-align:left;font-size:0.78rem;">Código</th>
+                <th style="padding:8px 12px;text-align:left;font-size:0.78rem;">Nome</th>
+                <th style="padding:8px 12px;text-align:center;font-size:0.78rem;">Situação</th>
+              </tr>
+            </thead>
+            <tbody id="lista-eleitores"></tbody>
+          </table>
+        </div>
+
+        <div class="acoes-admin">
+          <button class="btn-relatorio-html" onclick="gerarRelatorioHTML()">&#128196; Gerar Relatório HTML</button>
+          <button class="btn-exportar" onclick="exportarCSV()">&#128196; Exportar CSV</button>
+          <button class="btn-exportar" onclick="backupAutomatico()" style="background:#059669;">&#128190; Backup JSON</button>
+        </div>
+
+        <!-- Configuração de e-mail -->
+        <div class="config-email" id="config-email">
+          <h3>Configuração de E-mail</h3>
+          <label>E-mail(s) de destino (separados por vírgula):</label>
+          <input type="text" id="input-emails-destino" placeholder="email1@empresa.com, email2@empresa.com">
+          <button class="btn-salvar-email" onclick="salvarEmails()">Salvar E-mails</button>
+          <p class="email-status" id="email-status"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="dados.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

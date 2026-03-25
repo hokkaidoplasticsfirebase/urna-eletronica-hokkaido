@@ -1,0 +1,831 @@
+/* ===== RESET & BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #d4d4d4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  user-select: none;
+}
+
+/* ===== CABEÇALHO ===== */
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+.header h1 {
+  font-size: 1.6rem;
+  color: #333;
+  letter-spacing: 3px;
+}
+.header h2 {
+  font-size: 1.1rem;
+  color: #666;
+  font-weight: 600;
+}
+.btn-admin {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #aaa;
+  transition: color 0.2s;
+}
+.btn-admin:hover {
+  color: #555;
+}
+
+/* ===== CHASSI DA URNA ===== */
+.urna-chassi {
+  background: #e0e0d1;
+  border: 4px solid #b3b3a6;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  max-width: 860px;
+  width: 100%;
+}
+
+/* ===== TELA DE AGUARDANDO LIBERAÇÃO ===== */
+#tela-aguardando {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.aguardando-conteudo {
+  text-align: center;
+}
+.aguardando-icone {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+.aguardando-titulo {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #333;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+.aguardando-texto {
+  font-size: 0.9rem;
+  color: #888;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.aguardando-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.aguardando-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #999;
+  animation: dot-pulse 1.4s infinite ease-in-out;
+}
+.aguardando-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+.aguardando-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dot-pulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ===== TELA DE IDENTIFICAÇÃO DO ELEITOR ===== */
+#tela-identificacao {
+  flex-direction: column;
+  height: 100%;
+}
+.id-cabecalho {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+.id-corpo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+}
+.id-instrucao {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Display do código (sem input real) */
+.id-display {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 12px;
+  color: #333;
+  background: #f9f9f9;
+  border: 3px solid #333;
+  border-radius: 6px;
+  padding: 10px 24px;
+  text-align: center;
+  margin-bottom: 16px;
+  min-width: 180px;
+  font-family: monospace;
+}
+
+/* Teclado virtual */
+.id-teclado {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 200px;
+  margin-bottom: 12px;
+}
+.id-tecla {
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  height: 44px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.15), 0 3px 0 #000;
+  transition: all 0.1s;
+}
+.id-tecla:hover { background: #333; }
+.id-tecla:active { transform: translateY(2px); box-shadow: inset 0 4px 8px rgba(0,0,0,0.8); }
+.id-tecla-apagar { background: #cc5500; }
+.id-tecla-apagar:hover { background: #e06010; }
+.id-tecla-ok { background: #16a34a; }
+.id-tecla-ok:hover { background: #15803d; }
+
+.id-input {
+  border: 3px solid #333;
+  padding: 10px 16px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-align: center;
+  width: 200px;
+  outline: none;
+  border-radius: 4px;
+  background: #f9f9f9;
+}
+.id-input:focus {
+  border-color: #1e40af;
+  background: #fff;
+}
+.id-erro {
+  color: #dc2626;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-top: 10px;
+  text-align: center;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 6px 12px;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 320px;
+}
+.id-confirmacao {
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+  padding: 14px 20px;
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+}
+.id-bem-vindo {
+  font-size: 0.85rem;
+  color: #166534;
+  font-weight: 600;
+}
+.id-nome {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #166534;
+  margin: 4px 0 12px;
+}
+.id-acoes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.btn-id-cancelar {
+  background: #e5e7eb;
+  color: #333;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-id-cancelar:hover { background: #d1d5db; }
+.btn-id-confirmar {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-id-confirmar:hover { background: #15803d; }
+
+/* ===== TELA DE VOTAÇÃO ===== */
+.urna-tela {
+  background: #fff;
+  border: 4px solid #999;
+  width: 500px;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.tela-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+.tela-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #555;
+}
+.tela-cargo {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #222;
+  letter-spacing: 2px;
+  margin-left: 16px;
+  margin-top: 4px;
+}
+.tela-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #888;
+  border: 1px solid #ccc;
+  padding: 2px 8px;
+  text-transform: uppercase;
+}
+
+/* Centro da tela */
+.tela-centro {
+  flex: 1;
+  display: flex;
+  margin-top: 8px;
+}
+.tela-info {
+  flex: 1;
+  margin-left: 16px;
+}
+.tela-numero-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+.tela-label-sm {
+  font-size: 0.85rem;
+  font-weight: 700;
+  width: 64px;
+}
+.digito-box {
+  width: 48px;
+  height: 60px;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.digito-box.piscando {
+  animation: piscar 0.8s infinite;
+  background: #f5f5f5;
+}
+@keyframes piscar {
+  0%, 100% { background: #f5f5f5; }
+  50% { background: #ddd; }
+}
+
+/* Info do candidato */
+.info-candidato {
+  margin-top: 16px;
+}
+.info-candidato p {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+.info-candidato span {
+  font-size: 1.2rem;
+  margin-left: 8px;
+}
+
+.info-nulo {
+  margin-top: 12px;
+}
+.label-erro {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.texto-grande {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-top: 12px;
+}
+.pulsando {
+  animation: pulsar 1s infinite;
+}
+@keyframes pulsar {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.info-branco {
+  margin-top: 24px;
+  text-align: center;
+}
+
+/* Foto */
+.tela-foto {
+  width: 120px;
+  height: 150px;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  flex-shrink: 0;
+  margin-right: 8px;
+  overflow: hidden;
+}
+.foto-placeholder {
+  color: #bbb;
+  font-size: 0.7rem;
+  text-align: center;
+  line-height: 1.4;
+}
+.tela-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Rodapé da tela */
+.tela-rodape {
+  border-top: 2px solid #333;
+  padding-top: 8px;
+  margin-top: auto;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #333;
+}
+.instrucao-verde { color: #157a15; margin-left: 16px; }
+.instrucao-laranja { color: #cc6600; margin-left: 16px; }
+
+/* Tela FIM */
+#tela-fim {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.texto-fim {
+  font-size: 6rem;
+  font-weight: 900;
+  letter-spacing: 12px;
+  color: #333;
+}
+.texto-votou {
+  margin-top: 24px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #888;
+}
+
+/* ===== TECLADO DA URNA ===== */
+.urna-teclado {
+  background: #2a2a2a;
+  width: 300px;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  border-top: 1px solid #555;
+  border-left: 1px solid #444;
+  border-bottom: 4px solid #000;
+  border-right: 4px solid #000;
+}
+
+.teclado-header {
+  border-bottom: 1px solid #555;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+.teclado-logo {
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-circulo {
+  width: 16px;
+  height: 16px;
+  background: #1a8a1a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-centro {
+  width: 8px;
+  height: 8px;
+  background: #e6c619;
+  border-radius: 50%;
+}
+
+/* Teclas numéricas */
+.teclas-numericas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 0 12px;
+}
+.tecla {
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  height: 52px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.15), 0 4px 0 #000;
+  transition: all 0.1s;
+}
+.tecla:hover {
+  background: #333;
+}
+.tecla:active {
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.8), 0 0 0 #000;
+  transform: translateY(2px);
+}
+.tecla-vazia {
+  visibility: hidden;
+}
+
+/* Teclas de ação */
+.teclas-acao {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: auto;
+}
+.tecla-branco, .tecla-corrige, .tecla-confirma {
+  font-size: 0.65rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.1s;
+  height: 44px;
+}
+.tecla-branco {
+  background: #fff;
+  color: #000;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 4px 0 rgba(0,0,0,0.4);
+}
+.tecla-branco:active { transform: translateY(2px); box-shadow: inset 0 4px 8px rgba(0,0,0,0.2); }
+
+.tecla-corrige {
+  background: #ff6600;
+  color: #000;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 4px 0 rgba(0,0,0,0.4);
+}
+.tecla-corrige:active { transform: translateY(2px); box-shadow: inset 0 4px 8px rgba(0,0,0,0.3); }
+
+.tecla-confirma {
+  background: #00cc00;
+  color: #000;
+  height: 52px;
+  margin-top: -8px;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 4px 0 rgba(0,0,0,0.4);
+}
+.tecla-confirma:active { transform: translateY(2px); box-shadow: inset 0 4px 8px rgba(0,0,0,0.3); }
+
+/* ===== MODAL ADMIN ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+.modal-conteudo {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  max-width: 700px;
+  width: 100%;
+  padding: 24px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-fechar {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #888;
+}
+.modal-fechar:hover { color: #000; }
+
+.modal-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+.modal-cabecalho h2 {
+  font-size: 1.3rem;
+  color: #333;
+}
+.icone-grafico { font-size: 2rem; }
+.icone-cadeado { font-size: 3rem; color: #bbb; }
+
+/* Login admin */
+.login-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 0;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.login-area p {
+  color: #888;
+  text-align: center;
+}
+.login-area input {
+  border: 2px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.2rem;
+  letter-spacing: 6px;
+  width: 100%;
+  outline: none;
+}
+.login-area input:focus {
+  border-color: #3b82f6;
+}
+.btn-login {
+  background: #3b82f6;
+  color: #fff;
+  font-weight: 700;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.btn-login:hover { background: #2563eb; }
+
+/* Resultados */
+.resumo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.resumo-card {
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+.resumo-card.azul { background: #eff6ff; border: 1px solid #bfdbfe; }
+.resumo-card.cinza { background: #f9fafb; border: 1px solid #e5e7eb; }
+.resumo-card.vermelho { background: #fef2f2; border: 1px solid #fecaca; }
+.resumo-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.azul .resumo-label { color: #2563eb; }
+.cinza .resumo-label { color: #666; }
+.vermelho .resumo-label { color: #dc2626; }
+.resumo-valor {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #111;
+}
+
+.classificacao-titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.candidato-row {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 12px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.candidato-row-esquerda {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.posicao-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #fff;
+  background: #999;
+}
+.posicao-badge.primeiro { background: #eab308; }
+.candidato-nome { font-weight: 700; font-size: 1.1rem; color: #111; }
+.candidato-detalhe { font-size: 0.8rem; color: #888; }
+.candidato-row-direita { text-align: right; }
+.candidato-votos { font-size: 1.5rem; font-weight: 900; color: #333; }
+.candidato-votos span { font-size: 0.75rem; font-weight: 400; color: #888; }
+.candidato-percent { font-size: 0.85rem; font-weight: 700; color: #2563eb; }
+
+/* Ações admin */
+.acoes-admin {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.btn-imprimir, .btn-enviar-email, .btn-exportar, .btn-relatorio-html {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-imprimir { background: #333; color: #fff; }
+.btn-imprimir:hover { background: #111; }
+.btn-enviar-email { background: #2563eb; color: #fff; }
+.btn-enviar-email:hover { background: #1d4ed8; }
+.btn-exportar { background: #059669; color: #fff; }
+.btn-exportar:hover { background: #047857; }
+.btn-relatorio-html { background: #1e40af; color: #fff; }
+.btn-relatorio-html:hover { background: #1e3a8a; }
+
+/* Config e-mail */
+.config-email {
+  margin-top: 24px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+.config-email h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: #333;
+}
+.config-email label {
+  font-size: 0.85rem;
+  color: #666;
+  display: block;
+  margin-bottom: 4px;
+}
+.config-email input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  outline: none;
+  margin-bottom: 8px;
+}
+.config-email input:focus { border-color: #3b82f6; }
+.btn-salvar-email {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-salvar-email:hover { background: #1d4ed8; }
+.email-status {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #059669;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 800px) {
+  .urna-chassi {
+    flex-direction: column;
+    padding: 16px;
+  }
+  .urna-tela {
+    width: 100%;
+    min-height: 300px;
+  }
+  .urna-teclado {
+    width: 100%;
+  }
+  .tela-cargo {
+    font-size: 1.1rem;
+  }
+  .texto-fim {
+    font-size: 4rem;
+  }
+  .resumo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== IMPRESSÃO ===== */
+@media print {
+  body { background: #fff; }
+  .urna-chassi, .btn-admin, .acoes-admin, .config-email, .modal-fechar { display: none !important; }
+  .header { margin-bottom: 16px; }
+  .modal-overlay { 
+    position: static; 
+    background: none; 
+    padding: 0; 
+  }
+  .modal-conteudo {
+    box-shadow: none;
+    max-height: none;
+    padding: 0;
+  }
+}
